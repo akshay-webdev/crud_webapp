@@ -1,0 +1,91 @@
+/* Style the table container */
+.container {
+  margin-top: 20px;
+}
+
+/* Style the table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+/* Style the table header */
+.table thead th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+/* Style the table header cells */
+.table thead th,
+.table tbody td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Add some spacing to the table rows */
+.table tbody tr {
+  margin-bottom: 5px;
+}
+
+/* Style the table actions buttons */
+.table .btn {
+  margin-right: 5px;
+}
+
+/* Style the pagination */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination li {
+  list-style: none;
+  margin-right: 5px;
+}
+
+/* Style the modal dialogs */
+.modal-dialog {
+  max-width: 500px;
+}
+
+.modal-header {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  padding: 10px 20px;
+  background-color: #f7f7f7;
+}
+
+/* Style the form inputs in the modals */
+.modal-body .form-group label {
+  font-weight: bold;
+}
+
+/* Style the cancel and submit buttons in the modals */
+.modal-footer .btn-secondary {
+  background-color: #ccc;
+}
+
+.modal-footer .btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Style the delete modal warning message */
+.modal-body .text-warning {
+  color: #ff0000;
+  font-weight: bold;
+}
+td:last-child{
+  display: flex;
+  align-items: center;
+}

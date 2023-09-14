@@ -1,0 +1,25 @@
+{
+  "posts": [
+    {
+      "id": 5,
+      "name": "Post 1",
+      "emmail": "This is the body of post 1",
+      "address": "dsfksd;lfs",
+      "phone": 1234567890
+    },
+    {
+      "id": 6,
+      "name": "Post 1",
+      "emmail": "This is the body of post 1",
+      "address": "dsfksd;lfs",
+      "phone": 1234567890
+    },
+    {
+      "id": 8,
+      "name": "Post 1",
+      "emmail": "This is the body of post 1",
+      "address": "dsfksd;lfs",
+      "phone": 1234567890
+    }
+  ]
+}
