@@ -1,101 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 const ManageEmployee = () => {
   const [posts, setPosts] = useState([]);
-  const [data, setData] = useState(null);
   const [newEmp, setNewEmp] = useState({
     name: '',
     email: '',
     address: '',
     phone: ''
   });
-  const [editedItem,setEditedItem]=useState({
-    name:'',
-    email:'',
-    address:'',
-    phone:''
-  })
+  const [editedItem, setEditedItem] = useState({
+    id: '',
+    name: '',
+    email: '',
+    address: '',
+    phone: ''
+  });
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/posts')
-      .then((response) => {
-        setPosts(response.data);
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+    fetchData();
   }, []);
 
-  const addItem = () => {
-    // object with properties which we send
-
-    const employeeData = {
-      name: newEmp.name,
-      email: newEmp.email,
-      address: newEmp.address,
-      phone: newEmp.phone
-    }
-    axios.post('http://localhost:3000/posts', employeeData)
-      .then((response) => {
-        setPosts([...posts, response.data]);
-
-        // Reset the newEmp state to an empty object
-        setNewEmp({
-          name: '',
-          email: '',
-          address: '',
-          phone: ''
-        });
-        // setNewEmp('');
-      })
-      .catch((error) => {
-        console.error('Error adding employee:', error);
-      });
-  };
-  // Update Employee Data
-  const handleUpdate = () => {
+  const fetchData = async () => {
     try {
-      const response = axios.put(`http://localhost:3000/data/${editedItem.id}`, editedItem); // Replace with your API endpoint
-      // Handle the response as needed
-      console.log('Data updated:', response.data);
-      // Clear the editedItem state
-      setEditedItem({
-        id: '',
-        name: '',
-        email: '',
-        // Clear other fields as needed
-      });
-      // Refetch the data to display the updated version
-      setPosts();
+      const response = await axios.get('http://localhost:3000/posts');
+      setPosts(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const addItem = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/posts', newEmp);
+      setPosts([...posts, response.data]);
+      setNewEmp({ name: '', email: '', address: '', phone: '' });
+    } catch (error) {
+      console.error('Error adding employee:', error);
+    }
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await axios.put(`http://localhost:3000/data/${editedItem.id}`, editedItem);
+      console.log('Data updated:', editedItem);
+      setEditedItem({ id: '', name: '', email: '', address: '', phone: '' });
+      fetchData(); // Refetch the data to display the updated version
     } catch (error) {
       console.error('Error updating data:', error);
     }
   };
 
-  const deleteEmployee = (recordId) => {
-    axios.delete(`http://localhost:3000/posts/${recordId}`)
-      .then(response => {
-        alert('Are you sure you want to delete this record?');
-
-        // Filter out the deleted record
-        const updatedPosts = posts.filter((post) => post.id !== recordId);
-
-        // Update the IDs of the remaining records
-        const updatedData = updatedPosts.map((post, index) => ({
-          ...post,
-          id: index + 1,
-        }));
-
-        // Set the updated data and posts state
-        setPosts(updatedData);
-      })
-      .catch(error => {
-        console.error('Error deleting record:', error);
-      });
-  }
+  const deleteEmployee = async (recordId) => {
+    try {
+      await axios.delete(`http://localhost:3000/posts/${recordId}`);
+      alert('Are you sure you want to delete this record?');
+      const updatedPosts = posts.filter((post) => post.id !== recordId);
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error('Error deleting record:', error);
+    }
+  };
 
   return (
     <>
@@ -103,9 +68,9 @@ const ManageEmployee = () => {
         <div className="table-responsive">
           <div className='d-flex align-items-center justify-content-between'>
             <h4 className="my-4">Manage Employees</h4>
-
-            <button className='btn btn-primary' data-bs-toggle="modal"
-              data-bs-target="#addModal">Add Employee</button>
+            <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#addModal">
+              Add Employee
+            </button>
           </div>
           <table className="table table-striped table-hover">
             <thead>
@@ -127,23 +92,26 @@ const ManageEmployee = () => {
                   <td>{post.address}</td>
                   <td>{post.phone}</td>
                   <td>
-                    <button
-                      className="btn btn-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#updateModal"
-                    >
+                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
                       Edit
                     </button>
-                    <button className="btn btn-danger" onClick={() => deleteEmployee(post.id)}>Delete</button>
-
+                    <button className="btn btn-danger" onClick={() => deleteEmployee(post.id)}>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          
         </div>
       </div>
+
+      {/* Add Modal HTML */}
+      {/* Update Modal HTML */}
+      {/* ... (your modal components) */}
+    
+
+
       {/* Edit Modal HTML */}
       <div className="modal fade" id="addModal" tabIndex={-1}>
         <div className="modal-dialog">
